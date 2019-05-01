@@ -267,7 +267,15 @@ Slopes are similar but very shallow for different conditions, see plot:
 ```{r correlate}
 tbTwoC <- tbTwo %>% filter(cond != "word_vert_0_FALSE", cond != "letter_vert_0_FALSE", cond != "letter_horiz_0_TRUE", cond!="letter_vert_-90_FALSE")
 
+
 tbTwoSumm <- tbTwoC %>% group_by(subject,cond) %>% summarise_at(c("leftTopBias", "authorsPct", "authorsRaw", "authorsTotalChosen"),mean)
+tbTwoSumm$cond <- as.factor(tbTwoSumm$cond) #turn it into numeric to provide a y coordinate for the regression label
+
+tbTwoSumm <- tbTwoSumm %>% mutate(cond = case_when(cond == "letter_horiz_0_FALSE" ~ "letters left/right",
+                                        cond == "letter_vert_90_FALSE" ~ "letters top/bottom facing down", 
+                                        cond == "word_horiz_0_FALSE" ~ "words left/right",
+                                          TRUE ~ "unknown"   )) #e
+
 hh<- ggplot(tbTwoSumm, aes(y=leftTopBias, x=authorsPct, color=cond)) + geom_point() +   geom_smooth(method="lm",se=FALSE) +
   geom_point() 
 
@@ -285,9 +293,9 @@ lm_eqn = function(m) {
 
   as.character(as.expression(eq));                 
 }
-hh = hh + geom_text(aes(x = .3, y = .64, label = lm_eqn(lm(leftTopBias ~ authorsPct, tbTwoSumm))), parse = TRUE)
+hh = hh + geom_text(aes(x = .15, y = .67 - .08*as.numeric(cond), label = lm_eqn(lm(leftTopBias ~ authorsPct, tbTwoSumm))), parse = TRUE)
 hh + theme_bw() + ggtitle('normally oriented conditions')
-)
+
 #cor.test(
 ```
 
