@@ -269,12 +269,12 @@ tbTwoC <- tbTwo %>% filter(cond != "word_vert_0_FALSE", cond != "letter_vert_0_F
 
 
 tbTwoSumm <- tbTwoC %>% group_by(subject,cond) %>% summarise_at(c("leftTopBias", "authorsPct", "authorsRaw", "authorsTotalChosen"),mean)
-tbTwoSumm$cond <- as.factor(tbTwoSumm$cond) #turn it into numeric to provide a y coordinate for the regression label
 
 tbTwoSumm <- tbTwoSumm %>% mutate(cond = case_when(cond == "letter_horiz_0_FALSE" ~ "letters left/right",
                                         cond == "letter_vert_90_FALSE" ~ "letters top/bottom facing down", 
                                         cond == "word_horiz_0_FALSE" ~ "words left/right",
                                           TRUE ~ "unknown"   )) #e
+tbTwoSumm$cond <- as.factor(tbTwoSumm$cond) #turn it into numeric to provide a y coordinate for the regression label
 
 hh<- ggplot(tbTwoSumm, aes(y=leftTopBias, x=authorsPct, color=cond)) + geom_point() +   geom_smooth(method="lm",se=FALSE) +
   geom_point() 
