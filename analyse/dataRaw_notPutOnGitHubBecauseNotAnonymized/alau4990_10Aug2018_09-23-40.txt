@@ -1,2 +1,0 @@
-experimentPhase	trialnum	subject	task	oneTarget	noisePercent	ISIframes	ltrColorThis	leftStreamFlip	rightStreamFlip	rightResponseFirst	probe	trialInstructionPos	responseOrder0	answer0	response0	correct0	responseOrder1	answer1	response1	correct1	timingBlips
-main	0 	alau4990 	 T1 	 True 	 0.0 	39 	0.9 	False 	False 	True 	both 	(0, -1) 	0 	N 	Z 	0 	-99 	-99 	-99 	-99 	0
