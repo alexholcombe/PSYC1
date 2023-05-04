@@ -39,7 +39,7 @@ def calcWhichClicked(namesPerColumn,possibleResps,x,y):
         i += 1
     return foundOne, which
 
-alignHorizOption = 'left'
+alignTextOption = 'left'
 
 def calcRespXYandBoundingBox(namesPerColumn,possibleResps, i):
     column = floor( i / namesPerColumn )
@@ -52,7 +52,7 @@ def calcRespXYandBoundingBox(namesPerColumn,possibleResps, i):
     y = yStart + incrementY
     boxWidth = .2 #0.1
     boxHeight = spacingCtrToCtrY
-    if alignHorizOption == 'left':
+    if alignTextOption == 'left':
         x= x+boxWidth/2    
     return x,y, boxWidth, boxHeight
 
@@ -76,7 +76,7 @@ def drawAllRespOptions(myWin,bgColor,xStart,namesPerColumn,possibleResps,color,d
     authorStims = list()
     for i in range(len(possibleResps)):
         x, y, w, h = calcRespXYandBoundingBox( namesPerColumn,possibleResps, i )
-        option = visual.TextStim(myWin,colorSpace='rgb',color=color,alignHoriz=alignHorizOption, alignVert='center',
+        option = visual.TextStim(myWin,colorSpace='rgb',color=color,alignText=alignTextOption, anchorVert='center',
                                                                 height=h*relativeSize,units='norm',autoLog=False)
         option.setText(possibleResps[i])
         option.pos = (x-w/2, y)
@@ -254,16 +254,16 @@ def doAuthorLineup(myWin,bgColor,myMouse,clickSound,badClickSound,possibleResps,
         selected = [0]*len(possibleResps) #won't be used anyway but have to give it a value
     else:
         OKrespZone = visual.GratingStim(myWin, tex="sin", mask="gauss", texRes=256, color=[1,1,1], units='norm', size=[2, .2], sf=[0, 0], pos=(0,.88), name='OKrespZone')
-        OKtextStim = visual.TextStim(myWin,pos=(0, .88),colorSpace='rgb',color=(.5,-1,-1),alignHoriz='center', alignVert='center',height=.10,units='norm',autoLog=False)
+        OKtextStim = visual.TextStim(myWin,pos=(0, .88),colorSpace='rgb',color=(.5,-1,-1),alignText='center', anchorVert='center',height=.10,units='norm',autoLog=False)
         OKtextStim.setText('Click here if finished')
-        continueTextStim = visual.TextStim(myWin,pos=(-.85, .88),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.06,units='norm',autoLog=False)
+        continueTextStim = visual.TextStim(myWin,pos=(-.85, .88),colorSpace='rgb',color=(1,1,1),alignText='center', anchorVert='center',height=.06,units='norm',autoLog=False)
         continueTextStim.setText('Click another!')
-        instructionStim = visual.TextStim(myWin,pos=(-.95, .95),colorSpace='rgb',color=(1,1,1),alignHoriz='left', alignVert='center',
+        instructionStim = visual.TextStim(myWin,pos=(-.95, .95),colorSpace='rgb',color=(1,1,1),alignText='left', anchorVert='center',
                                         height=.06,wrapWidth=3,font='Times',units='norm',autoLog=False)
         instructionStim.setText('Click on the names that are published authors. When not sure, guess.')
         instructionStim.draw()
         myMouse.setPos([-10,-10]) #setPos([-.5,-.5]) #Seems to have no effect. 
-        mustDeselectMsgStim = visual.TextStim(myWin,pos=(0, .5),colorSpace='rgb',color=(1,-.9,-.9),alignHoriz='center', alignVert='center',height=.13,units='norm',autoLog=False)
+        mustDeselectMsgStim = visual.TextStim(myWin,pos=(0, .5),colorSpace='rgb',color=(1,-.9,-.9),alignText='center', anchorVert='center',height=.13,units='norm',autoLog=False)
         mustDeselectMsgStim.setText('You\'ve already selected half. If you wish to select another, you must unselect an author (by clicking on it) first.')
         timeLimit = 200 #sec
         selected, expStop, timedout = \

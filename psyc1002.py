@@ -26,6 +26,9 @@ try:
     from authorRecognitionLineup import doAuthorLineup
 except ImportError:
     print('Could not import authorRecognitionLineup.py (you need that file to be in the same directory)')
+print('platform=')
+print(sys.platform)
+
 if sys.platform == "win32":  #this means running in PSYC computer labs
     topDir = 'abgdj'
 else:
@@ -97,13 +100,8 @@ for stim in experimentTypesStim:
         ISIms = 34
     for spatial in experimentTypesSpatial:
         experimentsList.append( {'numSimultaneousStim': 2, 'stimType':stim, 'flipped':False, 'spatial':spatial, 'ori':0, 'ISIms':ISIms, 'oneTargetConditions':oneTargetConditions} )
-#add Humby's experiment to list, making it number 4
-experimentsList.append( {'numSimultaneousStim': 3, 'stimType':'letter', 'flipped':False, 'spatial':'horiz', 'ori':0, 'ISIms':34, 'oneTargetConditions':[False,False,False] } )
-#add letters horizontally arranged, flipped 5
-experimentsList.append( {'numSimultaneousStim': 2, 'stimType':'letter', 'flipped':True, 'spatial':'horiz', 'ori':0, 'ISIms':68,  'oneTargetConditions':oneTargetConditions} )
-#add letters vertical arranged, rotated right and rotated left 6
-experimentsList.append( {'numSimultaneousStim': 2, 'stimType':'letter', 'flipped':False, 'spatial':'vert', 'ori':90, 'ISIms':51,  'oneTargetConditions':oneTargetConditions} )
-experimentsList.append( {'numSimultaneousStim': 2, 'stimType':'letter', 'flipped':False, 'spatial':'vert', 'ori':-90, 'ISIms':51,  'oneTargetConditions':oneTargetConditions} )
+#add Tess' experiment to list, making it number 4
+experimentsList.append( {'numSimultaneousStim': 2, 'stimType':'word', 'flipped':False, 'spatial':'vert', 'ori':0, 'ISIms':34, 'oneTargetConditions':[False,False,False] } )
 
 seed = int( np.floor( time.time() ) )
 random.seed(seed); np.random.seed(seed) #https://stackoverflow.com/a/48056075/302378
@@ -114,7 +112,7 @@ otherData.update( {'networkMachineName': networkMachineName} )
 otherData.update( {'datetime':now.isoformat()} )
 otherData.update( {'seed':seed} )
 
-experimentNum = abs(  hash(subject)   ) % len(experimentsList)   #https://stackoverflow.com/a/16008760/302378
+experimentNum = 4 #abs(  hash(subject)   ) % len(experimentsList)   #https://stackoverflow.com/a/16008760/302378
 knownMachinesForPilot = ['W5FB2LG2','W5FFZKG2','W5FGZKG2','W5FFXKG2','W5FF2LG2','W5FD1LG2','W5FDYKG2','W5B5LG2' ]
 if now.day==31 or now.day < 4:  #week 1, before 4 August, piloting
     if networkMachineName in knownMachinesForPilot:
@@ -129,7 +127,7 @@ otherData.update(experiment)
 #Determine stimuli for this participant
 if experiment['stimType'] == 'letter':
     stimList =  list(string.ascii_lowercase)
-    toRemove = ['d','b','l','i','o','q','p','v','w','x'] #because symmetrical, see rotatedLettersAndSymbols.jpg
+    toRemove = ['d','b','l','i','o','q','p','v','w','x'] #because symmetrical, see rotatedLettersAndSymbols.jpg 
     for ltr in toRemove:
         stimList.remove(ltr)
 elif experiment['stimType'] == 'digit':
@@ -150,7 +148,7 @@ elif experiment['stimType'] == 'word':
         word = values[0]
         stimList.append( word )
         print(word,'\t')
-
+#print('stimlist=',stimList)
 bgColor = [-.7,-.7,-.7] # [-1,-1,-1]
 cueColor = [-.7,-.7,-.7] #originally [1.,1.,1.]
 ltrColor = .9 #[.9,.9,.9]# [-.3,-.3,-.3]
@@ -382,6 +380,7 @@ def calcAndPredrawStimuli(stimList,i,j,k):
    indices = [i,j,k]
    textStimuli = list()
    for i in range(3):
+        #
         stim = visual.TextStim(myWin, text = stimList[indices[i]],
                                            height=ltrHeight,font=myFont,colorSpace='rgb',color=ltrColor, 
                                            ori=experiment['ori'],alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
@@ -857,7 +856,8 @@ nDoneMain =0
 while nDoneMain < trials.nTotal and expStop!=True: #MAIN EXPERIMENT LOOP
     #print('nDoneMain=',nDoneMain)
     whichStim0 = np.random.randint(0, len(stimList) )
-    whichStim1 = np.random.randint(0, len(stimList) )
+    whichStim1 = np.random.randint(0, len(stimList) ) 
+    #check that whichStim0 and whichStim1 don't have letters in common. If they do generate a new pair
     whichStim2 = np.random.randint(0, len(stimList) ) #only used in Humby experiment
     calcAndPredrawStimuli(stimList,whichStim0,whichStim1,whichStim2)
     trial = trials.next()
