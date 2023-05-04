@@ -18,7 +18,7 @@ author_note: >
   This manuscript was written in RMarkdown using the *papaja* package [@R-papaja].
 
 abstract: >
-  As awareness of reproducibility problems in psychology have grown, new policies and norms for journals and for the practice of science have been proposed, and some have been implemented. Some of these prescriptions concern how replications should be planned, performed, and discussed <!-- [e.g., @pashler_taking_2017; @simons_introduction_2014]-->. These prescriptions have however not been fully justified. One is the claim that original authors, after a failure to replicate  their work, are obliged to do a follow-up experiment if they propose a particular sort of explanation of the failure to replicate. Fully justifying this and certain other prescriptions requires a broader discussion of where scientific responsibilities come from and how they are enforced. While some policies should await that discussion, we argue that one particular policy is relatively easy to justify. This is the policy of journals to solicit input of the original authors before an important large-scale replication study is conducted. Others have emphasized that original authors commenting before the replication study can improve the design of the study. We argue that what may be just as important is the benefits these comments have for other researchers, and that comments made after the replication results are known do not provide the same benefit.
+  PSYC1
   
 keywords          : "lateralization, hemispheric, lexical"
 wordcount         : "~10,000"  #Count the words from the terminal by 
@@ -90,7 +90,7 @@ Full set of conditions were:
 
 # Results
 
-Look for results in the analysis git folder
+Look for results in the analyse git folder
 
 From an email to Caleb: When participants saw (3 letter words) words oriented left to right the accuracy for the left word was 65.7% and the accuracy for the right word was 70.6%.
 

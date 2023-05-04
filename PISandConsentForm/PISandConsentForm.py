@@ -38,7 +38,7 @@ def doParticipantInformationStatement(img1filename, img2filename, myWin, myMouse
     #Create OK clicking area and message
     OKpos = (-.2,-.92)
     OKrespZone = visual.GratingStim(myWin, tex="sin", mask="gauss", texRes=256, color=[1,.5,.5], units='norm', size=[2.3, .2], sf=[0, 0], pos=OKpos, name='OKrespZone')
-    OKtextStim = visual.TextStim(myWin,pos=OKpos,colorSpace='rgb',color=(.5,-1,-1),alignHoriz='center', alignVert='center',height=.07,units='norm',autoLog=False)
+    OKtextStim = visual.TextStim(myWin,pos=OKpos,colorSpace='rgb',color=(.5,-1,-1),alignText='center', anchorVert='center',height=.07,units='norm',autoLog=False)
     OKtextStim.setText('Please read and then CLICK HERE to continue')
 
     myMouse.setPos( (-.5, -.8) ) #Bizarrely, while the documentatoin it says 0,0 is the center and units are the same as the window, I've found that 0,0 is the top right and negative means down and left
@@ -78,13 +78,13 @@ def doConsentForm(imgFilename, subjectName, myWin, myMouse, exportImages):
     myWin.setUnits('norm')
     OKpos = (-.2,-.92)
     OKrespZone = visual.GratingStim(myWin, tex="sin", mask="gauss", texRes=256, color=[1,.5,.5], units='norm', size=[2.3, .2], sf=[0, 0], pos=OKpos, name='OKrespZone')
-    OKtextStim = visual.TextStim(myWin,pos=OKpos,colorSpace='rgb',color=(.5,-1,-1),alignHoriz='center', alignVert='center',height=.07,units='norm',autoLog=False)
+    OKtextStim = visual.TextStim(myWin,pos=OKpos,colorSpace='rgb',color=(.5,-1,-1),alignText='center', anchorVert='center',height=.07,units='norm',autoLog=False)
     OKtextStim.setText('CLICK HERE to continue')
     
     consentImage = visual.ImageStim(myWin, image=imgFilename, pos=(0,0), units='norm')
     consentImage.size=(1.1,2)
     subjectPos = (-.45,.37)
-    subjectTextStim = visual.TextStim(myWin,pos=subjectPos,colorSpace='rgb',color=(-1,-1,-1),alignHoriz='center', alignVert='center',height=.04,units='norm',autoLog=False,
+    subjectTextStim = visual.TextStim(myWin,pos=subjectPos,colorSpace='rgb',color=(-1,-1,-1),alignText='center', anchorVert='center',height=.04,units='norm',autoLog=False,
                                                             text=subjectName)
     
     choiceTextColor = (-1,-1,-1)
@@ -115,12 +115,12 @@ def doConsentForm(imgFilename, subjectName, myWin, myMouse, exportImages):
     for i in range(len(posList)):
         this = {}
         this['textStim'] = \
-            visual.TextStim(myWin,pos=posList[i],colorSpace='rgb',color=choiceTextColor,alignHoriz='center', alignVert='center',height=choiceTextSz,units='norm',text=textList[i],autoLog=False)
+            visual.TextStim(myWin,pos=posList[i],colorSpace='rgb',color=choiceTextColor,alignText='center', anchorVert='center',height=choiceTextSz,units='norm',text=textList[i],autoLog=False)
         this['respZone'] = \
             visual.GratingStim(myWin, tex="sin", mask="gauss", texRes=256, color=[1,.5,.5], units='norm', size=[.3, .2], sf=[0, 0], pos=posList[i])
         this['checked'] = False
         this['checkmarkStim'] = \
-            visual.TextStim(myWin,pos=posList[i]+np.array([.06,0]),colorSpace='rgb',color=choiceTextColor,alignHoriz='right', alignVert='center',height=choiceTextSz*2,units='norm',
+            visual.TextStim(myWin,pos=posList[i]+np.array([.06,0]),colorSpace='rgb',color=choiceTextColor,alignText='right', anchorVert='center',height=choiceTextSz*2,units='norm',
                                     text=checkmarkText,autoLog=False)
         this['name'] = names[i]
         choiceDicts.append(this)

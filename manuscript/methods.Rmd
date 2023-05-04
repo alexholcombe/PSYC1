@@ -14,3 +14,42 @@ wordEccentricity  0.9 deg
 ltrHeight   0.7 deg
 
 When one letter or word presented, dynamic noise post-mask was presented only over it. When two were presented, three post-masks were drawn, over each and in the middle, forming a continuous span. This was deliberate (line 728), but I don't know why.
+
+## Participants
+Over seven hundred students voluntarily took part in the current study as part of their introductory psychology course at the University of Sydney. 
+
+## Materials
+The participants used a Windows desktop PC with a 29.5 cm tall and 52.5 cm wide Dell LCD P2417H screen, set to an image resolution of 1920 by 1080 pixels with a nominal refresh rate of 60 Hz. Brightness and contrast were set to 75%. The experiment was programmed in Psychopy and was run with Psychopy 1.84.2. Viewing distance was dependent on how the participant chose to sit, but if sitting as expected, viewing distance was approximately 55 cm.
+
+## Design and procedure
+
+The primary outcome of interest was the difference between performance in the conditions administered to different groups of subjects. The conditions administered all involved two stimuli which were either letters or two three-letter words. These two stimuli were either horizontally arrayed (one presented to the left of the central fixation point and one was presented to the right) or vertically arrayed (one presented directly above the fixation point and one directly below). In addition to these arrangements, the two stimuli were presented with different orientations, some of which are schematized (for the horizontal arrangement) in Figure 1. 
+
+The full set of conditions were:
+
+1.	Words, horizontally arrayed
+2.	Words, vertically arrayed
+3.	Letters (normal upright orientation), horizontally arrayed
+4.	Letters (normal upright orientation), vertically arrayed
+5.	Letters (mirror-reversed; that is, written backwards), horizontally arrayed
+6.	Letters (rotated 90 deg clockwise; that is, facing downwards), vertically arrayed
+7.	Letters (rotated 90 deg anticlockwise; that is, facing upwards), vertically arrayed
+
+In two-thirds of the trials, the two stimuli were briefly (34ms) and simultaneously flashed on the screen, before being replaced by a random-dot dynamic noise mask to curtail extended processing. The participant was asked to report both stimuli. In half of trials, they were prompted to report the stimulus on one side first, and in the other half of trials they were prompted to report the stimulus on the other side first. The prompt appeared immediately after the 100-millisecond dynamic noise mask, and comprised text (e.g., “Type the letter that was on the left”) and an underline (indicating where their response would appear on the screen) on the appropriate side.
+
+In one third of the trials, only a single stimulus was flashed. In these cases the noise mask that followed, rather than spanning the space from one side to the other, was presented only in the area where the lone stimulus was presented.
+The difficulty level was automatically adjusted to target a proportion correct of about 70% correct. That is, the participant performance on the last several trials was used by the program to adjust the time between the offset of the stimuli and the mask and the brightness of the stimuli.
+
+Prior to the presentation of the stimuli, a red fixation dot appeared in the centre of the screen. “Keep your eyes on the red dot” appeared on the screen, on half of trials above the fixation dot and on half of trials below the fixation dot for 333 ms while, to better hold the participant’s gaze, the fixation dot flickered. The fixation dot continued flickering for a further 400 ms.
+
+The two types of trials, two-stimulus presentation and one-stimulus presentation, continued in random order until the time available in the class elapsed (about 20 min). As the trials were self-paced, the number of trials completed thus varied considerably.
+
+Before the trials began, participants were asked their handedness, biological sex, age, and the first language they learned to read, and chose their answers from a drop-down list. For the first language they learned to read, they chose from a selection that included modern languages that are read right to left. The full list of options was: 'English', 'Arabic', 'Pali', 'Hebrew', 'Farsi', 'Chinese', 'Korean', 'Japanese', 'Other', 'Decline to answer'.
+
+The participants also completed an Author Recognition Test modified from Martin-Chang & Gould (2008). Scores on the ART have been found to correlate well with lifetime reading volume.
+
+Informed consent was gained from all participants prior to beginning the experiment (most of those who did not consent for their data to be used still completed the task as it was part of a class activity).
+
+## Author recognition test
+
+Raw score is number of authors chosen minus number of non-authors chosen. Percent score is calculated as a proportion of the maximum possible raw score, it can be negative if a participant clicks on more non-authors than authors. <!-- scoreAuthorRecognition.R -->

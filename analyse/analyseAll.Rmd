@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(plyr) #need to load because need it for Rmisc, and recommended load it before dplyr
 library(dplyr)
+library(ggplot2)
 ```
 
 ```{r loadData, echo=FALSE}
@@ -22,10 +23,7 @@ df<- readRDS(file = file.path(dataPath,"PSYC1_dfAfterConsentPracticeTrialsExclus
 demographicsAndExclusions created cond variable:
 cond = paste(numSimultaneousStim, stimType, spatial, ori, flipped) 
 
-Load ggplot and dplyr
 ```{r j, echo=FALSE}
-library(ggplot2)
-library(dplyr)
 
 tb<- df %>% mutate(leftTopBias = case_when(spatial == "horiz" ~ correct0 - correct1,
                                           spatial == "vert" ~ correct1 - correct0,   
@@ -100,6 +98,7 @@ tooLow3
 #
 ```
 
+Basic left/top bias results
 ```{r plotEach}
 #Group by condition, which is defined by spatial,stimType,flipped,orient
 #table(tbTwo$spatial,tbTwo$flipped,tbTwo$ori,tbTwo$stimType)
@@ -110,7 +109,7 @@ tooLow3
 tbTwo <- tbTwo %>% mutate(flippedTemp = substr(flipped,1,1)) #reduce to first letter only
 tbTwo <- tbTwo %>% mutate(cond = paste(stimType, spatial, ori, flipped, sep = '_'))
 tbTwo <- tbTwo %>% mutate(condExceptStim = paste(spatial, ori, flippedTemp, sep = '_'))
-gg<- ggplot(tbTwo, aes(x=condExceptStim,y=leftTopBias)) + stat_summary(fun.y="mean",geom="point",size=2, alpha=.5) + facet_grid(stimType~.)
+gg<- ggplot(tbTwo, aes(x=condExceptStim,y=leftTopBias)) + stat_summary(fun="mean",geom="point",size=2, alpha=.5) + facet_grid(stimType~.)
 #xondition name is paste(numSimultaneousStim, stimType, spatial, ori, flipped, sep = '_'))
 gg<- gg + xlab("horiz/vert_orientation_flippedT/F")
 gg<- gg+ stat_summary(fun.data="mean_cl_boot",fun.args=list(conf.int=0.95),geom="errorbar",width=.3,size=1) 
@@ -150,7 +149,7 @@ papaja::apa_beeplot(data=vert, id="subject", dv="leftTopBias", factors="cond",
                     args_swarm = list(cex = .3, bg = c("white"),col="grey50"),
                     , args_error_bars = list(lwd=2.2,length = 0.13))
 abline(h=0)
-
+ggsave("figures/topBiasTwoLtrs.png")
 #apa_print() output looks horrible unless knit into PDF or Word as part of a papaja document
 #papaja::apa_print(t_vert)
 
@@ -162,6 +161,28 @@ abline(h=0)
 #                     , args_error_bars = list(lwd=2.2,length = 0.13))
 # abline(h=0)
 
+```
+
+Create plot for PSYC2016 mini-textbook, with just facing-right condition.
+
+```{r}
+papaja::apa_beeplot(data= filter(vert, cond=="facing right" | cond=="facing up"),
+                    id="subject", dv="leftTopBias", factors="cond",
+                    ylab = "upper - lower (proportion correct)", xlab = "orientation",
+                    args_points = list(cex = 1, bg = c("black"),col="black"),
+                    args_swarm = list(cex = .3, bg = c("white"),col="grey50"),
+                    , args_error_bars = list(lwd=2.2,length = 0.13))
+abline(h=0)
+#ggsave("figures/topBiasTwoLtrsFacingRight.png")    ggsave doesn't work for these apa_beeplots! so change to ggplot
+
+papaja::apa_beeplot(data= filter(vert, cond=="facing up"),
+                    id="subject", dv="leftTopBias", factors="cond",
+                    ylab = "upper - lower (proportion correct)", xlab = "facing up",
+                    args_points = list(cex = 1, bg = c("black"),col="black"),
+                    args_swarm = list(cex = .3, bg = c("white"),col="grey50"),
+                    , args_error_bars = list(lwd=2.2,length = 0.13))
+abline(h=0)
+#ggsave("figures/topBiasTwoLtrsFacingUp.png")   ggsave doesn't work for these apa_beeplots!
 ```
 
 Report number of Ss per condition
@@ -263,7 +284,7 @@ Should probably throw out the letter_vert_0_FALSE condition and word_vert_0_FALS
 
 So the right thing to do I guess is to look at degree of top bias in facing down and facing right (vert conditions) and canonical (horizontal condition). 
 
-Slopes are similar but very shallow for different conditions, see plot:
+Slopes are similar but very shallow for different conditions, see plot but haven't gtotten the equations to render separately so see next snipper
 ```{r correlate}
 tbTwoC <- tbTwo %>% filter(cond != "word_vert_0_FALSE", cond != "letter_vert_0_FALSE", cond != "letter_horiz_0_TRUE", cond!="letter_vert_-90_FALSE")
 
@@ -293,10 +314,41 @@ lm_eqn = function(m) {
 
   as.character(as.expression(eq));                 
 }
-hh = hh + geom_text(aes(x = .15, y = .67 - .08*as.numeric(cond), label = lm_eqn(lm(leftTopBias ~ authorsPct, tbTwoSumm))), parse = TRUE)
+hh = hh + geom_text(aes(x = .15, y = .67 - .05*as.numeric(cond), label = lm_eqn(lm(leftTopBias ~ authorsPct, tbTwoSumm))), parse = TRUE)
 hh + theme_bw() + ggtitle('normally oriented conditions')
 
 #cor.test(
+```
+
+
+The constants in botht the abov and the below from Stack Overflow always print inside a c() and I don't know why.
+```{r}
+mm<- lm(leftTopBias ~ authorsPct, tbTwoSumm)
+
+cor.test(tbTwoSumm$authorsPct, tbTwoSumm$leftTopBias)
+```
+
+The constants in botht the abov and the below from Stack Overflow always print inside a c() and I don't know why.
+```{r}
+
+library(devtools)
+source_gist("524eade46135f6348140", filename = "ggplot_smooth_func.R") #https://stackoverflow.com/questions/38345894/r-source-gist-not-working
+
+#https://stackoverflow.com/a/27959418/302378
+hh<- ggplot(tbTwoSumm, aes(y=leftTopBias, x=authorsPct, color=cond)) + geom_point() +
+      xlab('Author recognition score') + ylab("Left or top bias") + labs(color="Condition") +
+      geom_smooth(method="lm",se=FALSE) + 
+      stat_smooth_func(geom="text",method="lm",hjust=0,vjust=-1, parse=TRUE)
+hh + papaja::theme_apa()
+
+# df = data.frame(x = c(1:100))
+# df$y = 2 + 5 * df$x + rnorm(100, sd = 40)
+# df$class = rep(1:2,50)
+#  ggplot(data = df, aes(x = x, y = y, label=y)) +
+#    stat_smooth_func(geom="text",method="lm",hjust=0,parse=TRUE) +
+#   geom_smooth(method="lm",se=FALSE) +
+#    geom_point() + facet_wrap(~class)
+
 ```
 
 Don't color code, thus combine conditions to yield whether there is a significant relationship.
@@ -319,8 +371,10 @@ lm_eqn = function(m) {
   as.character(as.expression(eq));                 
 }
 hh = hh + geom_text(aes(x = .3, y = .64, label = lm_eqn(lm(leftTopBias ~ authorsPct, tbTwoSumm))), parse = TRUE)
-hh + theme_bw() + ggtitle('normally oriented conditions cominbed')
+hh + theme_bw() + ggtitle('normally oriented conditions combined')
 ```
+
+Also try including letters rotated/flipped to face the other direction, but flip the sign of the bias so that line should still slope upward if author score increases your bias in the cue-specified direction.
 
 change MEAN ABOVE TO INCLUDE FIRST LANGUAGE READ AND TAKES FIRST INSTNACE IF NOT NUMERIC
 
