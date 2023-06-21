@@ -1,6 +1,6 @@
-
 TO-DO
 * recover right correct
+In particular oneTarget was NotScoredWhenRightOrUp position
 
 * confirm stim position for methods section
 * Write Draft methods 
